@@ -1,0 +1,52 @@
+﻿@model IEnumerable<BookSale.Models.Book>
+
+@{
+    ViewBag.Title = "GetListBook";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>GetListBook</h2>
+
+<p>
+    @Html.ActionLink("Create New", "CreateBook")
+</p>
+<table cellpadding="10" border="1">
+    <thead>
+        <tr>
+            <th width="250" style="text-align: center">Title</th>
+            <th width="150" style="text-align: center">Author</th>
+            <th width="100" style="text-align: center">Price</th>
+            <th width="100" style="text-align: center">Year</th>
+            <th width="100" style="text-align: center">Image cover</th>
+            <th width="60" style="text-align: center">Edit</th>  
+        </tr>
+    </thead>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Year)
+            </td>
+            <td style="text-align: center">
+                <img src="@item.Imgcover" width="95" title="Cover" />
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit", "EditBook", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "DeleteBook", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>

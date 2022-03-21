@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "ListBook";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="witdh=device-width" />
+</head>
+<body>
+    <h2>ListBook</h2>
+    <ul>
+        @{ int i = 1;}
+        @foreach (var item in ViewBag.Books)
+        {
+            <li>@i - <b>@item</b></li>
+            i++;
+        }
+    </ul>
+</body>
+
+
