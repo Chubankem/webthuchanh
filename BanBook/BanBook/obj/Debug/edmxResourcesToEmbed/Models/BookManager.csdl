@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BookManagerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Book">
+    <Key>
+      <PropertyRef Name="BookID" />
+    </Key>
+    <Property Name="BookID" Type="Int32" Nullable="false" />
+    <Property Name="Title" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="AuthorName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Price" Type="Double" />
+    <Property Name="Year" Type="Int32" />
+    <Property Name="CoverPage" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Chapters" Relationship="Self.fk_idBook" FromRole="Book" ToRole="Chapter" />
+  </EntityType>
+  <EntityType Name="Chapter">
+    <Key>
+      <PropertyRef Name="ChapterID" />
+    </Key>
+    <Property Name="ChapterID" Type="Int32" Nullable="false" />
+    <Property Name="ChapterName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="ShortContent" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="BookID" Type="Int32" />
+    <NavigationProperty Name="Book" Relationship="Self.fk_idBook" FromRole="Chapter" ToRole="Book" />
+  </EntityType>
+  <Association Name="fk_idBook">
+    <End Role="Book" Type="Self.Book" Multiplicity="0..1" />
+    <End Role="Chapter" Type="Self.Chapter" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Book">
+        <PropertyRef Name="BookID" />
+      </Principal>
+      <Dependent Role="Chapter">
+        <PropertyRef Name="BookID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="BookManagerEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Books" EntityType="Self.Book" />
+    <EntitySet Name="Chapters" EntityType="Self.Chapter" />
+    <AssociationSet Name="fk_idBook" Association="Self.fk_idBook">
+      <End Role="Book" EntitySet="Books" />
+      <End Role="Chapter" EntitySet="Chapters" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
